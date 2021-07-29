@@ -27,7 +27,7 @@ class EventParser(BaseParser):
         event_link_href = event_link.get_attribute('href')
         event_link_text = event_link.get_attribute('textContent').strip()
 
-        return event_link_text, event_link_href
+        return {'text': event_link_text, 'href': event_link_href}
 
     def get_event_players(self):
         self.driver.get(BASE_EVENT_URL.format(self.event_code))
@@ -42,7 +42,7 @@ class EventParser(BaseParser):
             player_href = player.get_attribute('href')
             player_code = get_code_from_link(player_href)
 
-            yield player_code, player_href, player_text
+            yield {'code': player_code, 'href': player_href, 'nickname': player_text}
 
     def get_event_mvp(self):
         self.driver.get('https://www.hltv.org/events/5469/test')
@@ -56,4 +56,4 @@ class EventParser(BaseParser):
         player_mvp_href = player_mvp.get_attribute('href')
         player_mvp_code = get_code_from_link(player_mvp_text)
 
-        return player_mvp_code, player_mvp_href, player_mvp_text
+        return {'code': player_mvp_code, 'href': player_mvp_href, 'nickname': player_mvp_text}
